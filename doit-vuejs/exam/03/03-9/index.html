@@ -6,20 +6,29 @@
 
 <body>
     <div id="app">
-        <child-component v-bind:propsdata="message"></child-component>
+        <child-component v-on:show-log="printText"></child-component>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script>
-        Vue.component('child-component', {
-            props: ['propsdata'],
-            template: '<p>{{ propsdata }}</p>',
+        Vue.component("child-component", {
+            template: '<button v-on:click="showLog">show</button>',
+            methods: {
+                showLog: function () {
+                    this.$emit("show-log");
+                }
+            }
         });
 
-        new Vue({
-            el: '#app',
+        var app = new Vue({
+            el: "#app",
             data: {
-                message: 'Hello Vue! passed from parent Component'
+                message: "Hello Vue! passed from parent component"
+            },
+            methods: {
+                printText: function () {
+                    console.log("received an event");
+                }
             }
         });
     </script>
